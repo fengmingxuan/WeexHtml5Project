@@ -1,0 +1,73 @@
+<template>
+  <div>
+    <scroller class="scroller">
+      <div class="row" repeat="{{row in rows}}" >
+          <text  class="text"  onclick="openitem">{{row}}</text>
+      </div>
+    </scroller>
+
+  </div>
+</template>
+
+<script>
+    var navigator = require('@weex-module/navigator')
+    var taoguba = require('./taoguba');
+    var modal =  require('@weex-module/modal')
+    var weexModule =  require('@weex-module/weexModule');
+    export default {
+        data : {
+          rows: []
+
+        },
+        created () {
+            this.rows.push('weexbar/tabbar')
+            this.rows.push('weexbar/stocknews')
+            this.rows.push('weexbar/shuoshuo')
+            this.rows.push('weexbar/dayanalysis')
+            this.rows.push('weexbar/meetingbar')
+            this.rows.push('weexbar/meetingtime')
+        },
+        methods: {
+            openitem:function (event) {
+                //callJS tasks:[{"data":"14","type":2},{"data":"[{\"args\":[\"150\",\"click\",{\"position\":{\"height\":52.77778,\"width\":713.19446,\"x\":33.333332,\"y\":191.66667}},null],\"method\":\"fireEvent\"}]","type":3}]
+                // tasks:[{"module":"modal","method":"toast","args":[{"message":{"position":{"height":52.77778,"width":713.19446,"x":33.333332,"y":191.66667},"type":"click",
+                // "target":{"ref":"186","type":"text","attr":{"value":"a"},"style":{"fontSize":45,"color":"#666666"},"event":["click"]},"timestamp":1488878471697}}]}]
+                var name = event.target.attr.value;
+                //alert('event.value : ' + event.value)
+                navigator.push({
+                    url: taoguba.getDefaultUrl(name),
+                    animated: "true"
+                }, event => {
+
+                })
+            }
+        }
+    }
+</script>
+
+<style scoped>
+  .scroller {
+    width: inherit;
+    height: inherit;
+    border-width: 3px;
+    border-style: solid;
+    border-color: rgb(162, 217, 192);
+    margin-left: 1px;
+    margin-right: 1px;
+  }
+  .row {
+    height: 150px;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 30px;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    border-bottom-color: #DDDDDD;
+  }
+
+  .text{
+    color:#666666;
+    font-size:40px;
+    font-weight:bold;
+  }
+</style>

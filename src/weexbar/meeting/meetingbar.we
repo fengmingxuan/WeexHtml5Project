@@ -1,0 +1,52 @@
+<template>
+    <div style="flex-direction: column;">
+        <wxc-top-tabbar tab-items={{tabItems}}></wxc-top-tabbar>
+    </div>
+</template>
+
+<script>
+
+var taoguba = require('../../taoguba');
+    require('./wxc-top-tabbar.we');
+    module.exports = {
+        data:{
+            tabItems:[
+                {
+                    index:0,
+                    title:"其他时间",
+                    titleColor:'',
+                    icon:"",
+                    image:"http://ww2.sinaimg.cn/large/0060lm7Tgw1fb5paqsppfj302v02gmwx.jpg",
+                    selectedImage:"http://ww3.sinaimg.cn/large/0060lm7Tgw1fb5pacghqhj302v02g744.jpg",
+                    src:taoguba.getPathUrl('/dist/weexbar/meetingtime.js'),
+                    visibility:"visible"
+                },
+                {
+                    index:1,
+                    title:"本周股市动向",
+                    titleColor:'',
+                    icon:"",
+                    image:"http://ww2.sinaimg.cn/large/0060lm7Tgw1fb5oxe9vbkj302s02g0si.jpg",
+                    selectedImage:"http://ww4.sinaimg.cn/large/0060lm7Tgw1fb5ow9ddswj302s02gglh.jpg",
+                     src:taoguba.getPathUrl('/dist/weexbar/meetingtime.js'),
+                    visibility:"hidden"
+                },
+                {
+                    index:2,
+                    title:"下周股市动向",
+                    titleColor:'',
+                    icon:"",
+                    image:"http://ww1.sinaimg.cn/large/0060lm7Tgw1fb5pbtauy1j302c02hmwx.jpg",
+                    selectedImage:"http://ww4.sinaimg.cn/large/0060lm7Tgw1fb5pbb390dj302c02hglg.jpg",
+                    src:taoguba.getPathUrl('/dist/weexbar/meetingtime.js'),
+                    visibility:"hidden"
+                }
+
+            ]
+        }
+    }
+</script>
+
+<style>
+
+</style>

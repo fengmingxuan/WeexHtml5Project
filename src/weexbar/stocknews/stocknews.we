@@ -1,0 +1,125 @@
+<template>
+    <div>
+    <navbar title="股市直播"></navbar>
+    <list>
+         <refresh class="refresh-view" display="{{refresh_display}}" onrefresh="onrefresh">
+             <loading-indicator class="indicator" ></loading-indicator>
+             <text class="refresh-arrow" style="text-align:center;color:rgb(238,162,54)" if="{{refresh_display==='hide'}}">
+                 {{msg}}
+             </text>
+         </refresh>
+        <cell>
+            <scroller>
+                <stock_news_item repeat={{stockArray}}></stock_news_item>
+            </scroller>
+            <div class="line"></div>
+        </cell>
+        </list>
+    </div>
+</template>
+
+<script>
+
+    require('weex-components');
+     require('./../../template/navbar.we')
+     require('./stock_news_item.we')
+    var stream = require('@weex-module/stream');
+    var modal = require('@weex-module/modal');
+     var taoguba = require('../../taoguba');
+    module.exports = {
+
+     data:{
+            refresh_display:'hide',
+            stockArray:[],
+            test:'s-test',
+            msg:'下拉刷新'
+         },
+
+        methods:{
+            onrefresh:function(e){
+                var self = this;
+                self.msg = '下拉刷新';
+                self.refresh_display = 'show';
+                this.$call('timer','setTimeout',function(){
+                   self.refresh_display = 'hide';
+                },2000);
+                self.refresh();
+            },
+
+            refresh:function(){
+                    var self = this;
+                    var url = taoguba.apiGetForums();
+                    stream.fetch({
+                            method:'GET',
+                            url:url,
+                            body:{
+                                 "blockID":"1",
+                                 "pageNo":"1",
+                                 "flag":"0"
+                            },
+                            header:{
+                               'token':'V1265957&872778C220508F40E677DC2AF279757B-n1',
+                               'Access-Control-Allow-Origin':'https://api.taoguba.com.cn',
+                               'Access-Control-Allow-Headers':'x-requested-with,content-type',
+                               'Access-Control-Allow-Methods':'GET'
+                            }
+                    },function(ret){
+                            if(!ret.ok){
+//                                modal.toast({'message':'你的手机网络出问题啦!','duration':2});
+                            }else{
+                                self.stockArray.splice(0,self.stockArray.length);
+                                var json = JSON.parse(ret.data);
+                                for(var i = 0;i<json.dto.length;i++){
+                                    self.stockArray.push(json.dto[i]);
+                                }
+                            }
+                    });
+               }
+
+          },
+         created: function(){
+               var self = this;
+               self.refresh();
+                stream.fetch({ 
+                            method:'GET', 
+                            url:taoguba.apiGetForums(), 
+                            body:{
+                            "blockID":"1",
+                            "pageNo":"1",
+                            "flag":"0"
+                            },
+                             header:{
+                               'token':'V1265957&872778C220508F40E677DC2AF279757B-n1',
+                               'Access-Control-Allow-Origin':'https://api.taoguba.com.cn',
+                               'Access-Control-Allow-Headers':'x-requested-with,content-type',
+                               'Access-Control-Allow-Methods':'GET'
+                             }
+                            },
+                         function(ret){ 
+                                    if(!ret.ok){ 
+//                                    modal.toast({"message":"Network Error!",'duration':2}); 
+                                   }else{ 
+                                        var json = JSON.parse(ret.data); 
+                                        for(var i = 0; i < json.dto.length;i++){
+                                            self.stockArray.push(json.dto[i]);
+                                        }
+                             } },
+                             function(res){  }
+                  );
+        }
+    }
+</script>
+
+<style>
+    .refresh-view{
+        height:100;
+        width:750;
+        align-items:center;
+    }
+
+    .indicator{
+        width:60;
+        height:60;
+        color:#889967;
+    }
+</style>

@@ -1,0 +1,93 @@
+<template>
+    <div class="wrapper">
+    <navbar class="navbar" title="行业会议"></navbar>
+    <embed class="content" style="visibility:{{visibility}}" repeat={{tabItems}} src={{src}} type="weex"></embed>
+    <div class="tabbar" append = "tree">
+        <wxc-tabitem repeat={{tabItems}} index={{index}} icon={{icon}} title={{title}} title-color={{titleColor}}></wxc-tabItem>
+    </div>
+
+    </div>
+</template>
+
+<style>
+    .wrapper {
+    position: absolute;
+        width: 750;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+    .content {
+        position: absolute;
+        top: 190;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    .tabbar {
+        position: absolute;
+        flex-direction: row;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top:88;
+        height: 88;
+    }
+    .navbar {
+             width: 750;
+            position: absolute;
+            flex-direction: column;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            top:0;
+            height: 100;
+        }
+</style>
+
+<script>
+require('./../../template/navbar.we')
+require('weex-components');
+    module.exports = {
+        data: {
+          tabItems: [ ],
+          selectedIndex: 0,
+          selectedColor: '#ff0000',
+          unselectedColor: '#000000',
+        },
+        created: function () {
+          this.selected(this.selectedIndex);
+
+          this.$on('tabItem.onClick',function(e){
+            var detail= e.detail;
+            this.selectedIndex = detail.index;
+            this.selected(detail.index);
+
+            var params = {
+              index: detail.index
+            };
+            this.$dispatch('tabBar.onClick', params);
+          });
+        },
+        methods: {
+            selected: function(index) {
+              for(var i = 0; i < this.tabItems.length; i++) {
+                var tabItem = this.tabItems[i];
+                if(i == index){
+                  tabItem.icon = tabItem.selectedImage;
+                  tabItem.titleColor = this.selectedColor;
+                  tabItem.visibility = 'visible';
+                }
+                else {
+                  tabItem.icon = tabItem.image;
+                  tabItem.titleColor = this.unselectedColor;
+                  tabItem.visibility = 'hidden';
+                }
+              }
+            },
+        }
+    }
+</script>

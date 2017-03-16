@@ -1,0 +1,61 @@
+<template>
+    <div style="flex-direction: column;">
+        <wxc-tabbar tab-items={{tabItems}}></wxc-tabbar>
+    </div>
+</template>
+
+<script>
+    require('weex-components');
+    var taoguba = require('../taoguba');
+    module.exports = {
+        data:{
+            tabItems:[
+                {
+                                   index:0,
+                                   title:"股市直播",
+                                   titleColor:'',
+                                   icon:"",
+                                   image:"http://ww2.sinaimg.cn/large/0060lm7Tgw1fb5paqsppfj302v02gmwx.jpg",
+                                   selectedImage:"http://ww3.sinaimg.cn/large/0060lm7Tgw1fb5pacghqhj302v02g744.jpg",
+                                   src:taoguba.getPathUrl('/dist/weexbar/stocknews.js'),
+                                   visibility:"visible"
+                               },
+                               {
+                                   index:1,
+                                   title:"吐槽区",
+                                   titleColor:'',
+                                   icon:"",
+                                   image:"http://ww2.sinaimg.cn/large/0060lm7Tgw1fb5oxe9vbkj302s02g0si.jpg",
+                                   selectedImage:"http://ww4.sinaimg.cn/large/0060lm7Tgw1fb5ow9ddswj302s02gglh.jpg",
+                                   src:taoguba.getPathUrl('/dist/weexbar/shuoshuo.js'),
+                                   visibility:"hidden"
+                               },
+                               {
+                                   index:2,
+                                   title:"每日分析",
+                                   titleColor:'',
+                                   icon:"",
+                                   image:"http://ww1.sinaimg.cn/large/0060lm7Tgw1fb5pbtauy1j302c02hmwx.jpg",
+                                   selectedImage:"http://ww4.sinaimg.cn/large/0060lm7Tgw1fb5pbb390dj302c02hglg.jpg",
+                                   src:taoguba.getPathUrl('/dist/weexbar/dayanalysis.js'),
+                                   visibility:"hidden"
+                               },
+                                {
+                                    index:3,
+                                    title:"行业会议",
+                                    titleColor:'',
+                                    icon:"",
+                                    image:"http://ww1.sinaimg.cn/large/0060lm7Tgw1fb5pbtauy1j302c02hmwx.jpg",
+                                    selectedImage:"http://ww4.sinaimg.cn/large/0060lm7Tgw1fb5pbb390dj302c02hglg.jpg",
+                                    src:taoguba.getPathUrl('/dist/weexbar/meetingbar.js'),
+                                    visibility:"hidden"
+                                }
+
+            ]
+        }
+    }
+</script>
+
+<style>
+
+</style>

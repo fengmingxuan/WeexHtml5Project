@@ -1,0 +1,86 @@
+<template>
+    <div>
+        <div class="news-content">
+            <text  style="font-size:30">{{subject}}</text>
+        </div>
+        <div class="news-bottom" >
+            <div class="news-txt">
+
+             </div>
+              <div class="news-txt">
+
+               </div>
+                <div class="news-txt">
+
+               </div>
+             <div class="news-share"  obj="{{topicID}}">
+                 <image class="img" src="http://ww1.sinaimg.cn/large/0060lm7Tgw1fbbe3xef2oj303h02owec.jpg"></image>
+                  <text class="txt">{{usefulNum}}</text>
+             </div>
+            <div class="news-reply" obj="{{topicID}}">
+                <image class="img" src="http://i1.piimg.com/567571/c046122d57e5da9e.png"></image>
+                 <text class="txt">{{totalReplyNum}}</text>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    require('weex-components');
+    var modal = require('@weex-module/modal');
+    var stream = require('@weex-module/stream');
+    var storage = require('@weex-module/storage');
+    module.exports = {
+        created:function(){
+
+        },
+        data:{
+          'userID':'2',
+          'userName':'股天乐',
+          'topicID':'1647303',
+          'totalReplyNum':'139',
+          'subject':'淘县首届实战高峰论坛，专属投资者的大盛会，报名走起！',
+          'postDate':'1490284800000',
+          'lastReplyDate':'1490284800000',
+          'thumbnail':'/img/forumthumbnail.png',
+          'usefulNum':'36'
+
+        },
+        methods:{
+
+        }
+    }
+</script>
+
+<style>
+   .news-bottom{
+        margin-top:15;
+        margin-bottom:15;
+        flex-direction:row;
+    }
+
+    .news-content,.news-bottom{
+        margin-left:20;
+        margin-right:20;
+    }
+
+    .news-reply,.news-txt,.news-share{
+        flex:1;
+        justify-content:center;
+        align-items:center;
+        flex-direction:row;
+    }
+
+  .news-content{
+        margin:20;
+
+    }
+     .img{
+            width:40;
+            height:40;
+        }
+  .txt{
+        opacity:0.3;
+        font-size:30;
+    }
+</style>
