@@ -2,7 +2,7 @@
   <div>
     <scroller class="scroller">
       <div class="row" repeat="{{row in rows}}" >
-          <text  class="text"  onclick="openitem">{{row}}</text>
+          <text   class="{{textClass}}" onclick="openitem">{{row}}</text>
       </div>
     </scroller>
 
@@ -14,9 +14,12 @@
     var taoguba = require('./taoguba');
     var modal =  require('@weex-module/modal')
     var weexModule =  require('@weex-module/weexModule');
+    var globalEventModule = require('@weex-module/globalEvent');
     export default {
         data : {
-          rows: []
+          rows: [],
+          themetype:0,
+          textClass:'dayclass'
 
         },
         created () {
@@ -26,6 +29,28 @@
             this.rows.push('weexbar/dayanalysis')
             this.rows.push('weexbar/meetingbar')
             this.rows.push('weexbar/meetingtime')
+        },
+
+
+        ready(){
+        var self = this;
+    
+
+
+//            globalEventModule.addEventListener("mainlist_text_day_night",function(options){
+//                     console.log('mainlist_text_day_night =='+options.toString());
+//                     //callJS >>>> instanceId:1function:callJS tasks:[{"data":"1","type":2},{"data":"[{\"args\":[\"1\",{\"bundleUrl\":\"http://192.168.1.15:12580/dist/mainlist.js\",\"themetype\":1},true],\"method\":\"callback\"}]","type":3}]
+//                  self.themetype = options.themetype;
+//                  if(self.themetype==0){
+//                     self.textClass='dayclass'
+//                   }else{
+//                    self.textClass='nightclass'
+//                   }
+//                    console.log('mainlist_text_day_night themetype=='+self.themetype);
+//            });
+
+
+
         },
         methods: {
             openitem:function (event) {
@@ -40,7 +65,17 @@
                 }, event => {
 
                 })
-            }
+            },
+            // 获取 native的传参
+              getOptions: function() {
+                this.themetype = this.$getConfig().themetype;
+                if(this.themetype==0){
+                   this.textClass='dayclass'
+                }else{
+                   this.textClass='nightclass'
+                }
+                console.log('getOptions themetype=='+this.themetype);
+              }
         }
     }
 </script>
@@ -64,6 +99,17 @@
     border-bottom-style: solid;
     border-bottom-color: #DDDDDD;
   }
+
+  .dayclass{
+       color:#666666;
+       font-size:40px;
+       font-weight:bold;
+     }
+  .nightclass{
+         color:#ff0000;
+         font-size:40px;
+         font-weight:bold;
+    }
 
   .text{
     color:#666666;
