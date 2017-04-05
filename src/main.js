@@ -1,9 +1,10 @@
 // import the original weex-html5.
 import weex from 'weex-html5'
 import hello from 'weex-hello'
+var actionSheet = require('../weex-components/weex-action-sheet/web/index')
 // install the component.
 weex.install(hello)
-
+weex.install(actionSheet)
 // init the weex and load the bundle of 'demo/index.we'.
 ; (function () {
   function getUrlParam (key) {

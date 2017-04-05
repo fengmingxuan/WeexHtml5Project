@@ -2575,7 +2575,7 @@
 	'use strict';
 
 	var BASE_URL = {
-	    IP: '192.168.1.10',
+	    IP: '192.168.1.15',
 	    HTTP: 'http://',
 	    PORT: '8080'
 	};

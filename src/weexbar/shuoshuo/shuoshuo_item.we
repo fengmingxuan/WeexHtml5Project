@@ -1,22 +1,22 @@
 <template>
     <div>
         <div class="news-content">
-            <text  style="font-size:30">{{subject}}</text>
+            <text  class="{{textClass}}">{{subject}}</text>
         </div>
         <div class="news-bottom" >
             <div class="news-txt">
-                 <text class="txt">{{postDate}}</text>
+                 <text class="{{textClass}}">{{postDate}}</text>
              </div>
               <div class="news-txt">
-                   <text class="txt">{{userName}}</text>
+                   <text class="{{textClass}}">{{userName}}</text>
                </div>
              <div class="news-share"  obj="{{topicID}}">
                  <image class="img" src="http://ww1.sinaimg.cn/large/0060lm7Tgw1fbbe3xef2oj303h02owec.jpg"></image>
-                  <text class="txt">{{usefulNum}}</text>
+                  <text class="{{textClass}}">{{usefulNum}}</text>
              </div>
             <div class="news-reply" obj="{{topicID}}">
                 <image class="img" src="http://i1.piimg.com/567571/c046122d57e5da9e.png"></image>
-                 <text class="txt">{{totalReplyNum}}</text>
+                 <text class="{{textClass}}">{{totalReplyNum}}</text>
             </div>
         </div>
     </div>
@@ -27,9 +27,14 @@
     var modal = require('@weex-module/modal');
     var stream = require('@weex-module/stream');
     var storage = require('@weex-module/storage');
+    var weexEventModule =  require('@weex-module/weexEventModule');
+
     module.exports = {
         created:function(){
-
+           // var self = this;
+                this.themetype = this.$getConfig().themetype;
+//            weexEventModule.ShowLogI('shuoshuo_item.we','kjnkl5616515---'+this.$getConfig().themetype);
+           this. changeSkin();
         },
         data:{
           'userID':'2',
@@ -40,25 +45,44 @@
           'postDate':'1490284800000',
           'lastReplyDate':'1490284800000',
           'thumbnail':'/img/forumthumbnail.png',
-          'usefulNum':'36'
-
+          'usefulNum':'36',
+          //'skintype':'nkjnjkkj'
+           themetype:0,
+            textClass:'dayclass'
         },
         methods:{
+            changeSkin: function() {
+//                    weexEventModule.ShowLogI('shuoshuo_item.we','this.themetype--->'+this.themetype);
+                    if(this.themetype==0){
+                               this.textClass='dayclass'
+                    }else{
+                               this.textClass='nightclass'
+                    }
+            }
+        },
+         ready(){
+             this. changeSkin();
+//         接收广播
+//            this.$on('changeSkin', function(e) {
+//                          weexEventModule.ShowLogI('shuoshuo_item.we','5615--->'+e.toString());
+//                         // self.title = e.title;
+//                          weexEventModule.ShowLogI('shuoshuo_item.we','1263155--->'+e.skintype);
+//             })
+         }
 
-        }
     }
 </script>
 
 <style>
    .news-bottom{
-        margin-top:15;
-        margin-bottom:15;
+        margin-top:15px;
+        margin-bottom:15px;
         flex-direction:row;
     }
 
     .news-content,.news-bottom{
-        margin-left:20;
-        margin-right:20;
+        margin-left:20px;
+        margin-right:20px;
     }
 
     .news-reply,.news-txt,.news-share{
@@ -69,15 +93,26 @@
     }
 
   .news-content{
-        margin:20;
+        margin:20px;
 
     }
      .img{
-            width:40;
-            height:40;
+            width:40px;
+            height:40px;
         }
   .txt{
         opacity:0.3;
-        font-size:30;
+        font-size:30px;
     }
+
+       .dayclass{
+               color:#666666;
+               font-size:40px;
+               font-weight:bold;
+             }
+          .nightclass{
+                 color:#ff0000;
+                 font-size:40px;
+                 font-weight:bold;
+            }
 </style>

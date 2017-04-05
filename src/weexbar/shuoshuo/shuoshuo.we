@@ -10,7 +10,7 @@
          </refresh>
         <cell>
             <scroller>
-                <shuoshuo_item repeat={{shuoshuoArray}}></shuoshuo_item>
+                <shuoshuo_item id="sub" repeat={{shuoshuoArray}}></shuoshuo_item>
             </scroller>
             <div class="line"></div>
         </cell>
@@ -25,14 +25,18 @@
      require('./shuoshuo_item.we')
     var stream = require('@weex-module/stream');
     var modal = require('@weex-module/modal');
+     var weexEventModule =  require('@weex-module/weexEventModule');
      var taoguba = require('../../taoguba');
+       var globalEventModule = require('@weex-module/globalEvent');
     module.exports = {
 
      data:{
             refresh_display:'hide',
             shuoshuoArray:[],
             test:'s-test',
-            msg:'下拉刷新'
+            msg:'下拉刷新',
+            textClass:'dayclass',
+            TAG:'shuoshuo.we'
          },
 
         methods:{
@@ -68,6 +72,21 @@
                                 }
                             }
                     });
+               },
+
+               getOptions: function() {
+                     var self = this;
+                     this.themetype = this.$getConfig().themetype
+                    // weexEventModule.ShowLogI(this.TAG,this.themetype);
+                     if(this.themetype==0){
+                            this.textClass='dayclass'
+                     }else{
+                            this.textClass='nightclass'
+                     }
+//发送广播
+//                     this.$broadcast('changeSkin', {
+//                               "skintype": "11"
+//                     })
                }
 
           },
@@ -92,20 +111,44 @@
                              } },
                              function(res){  }
                   );
-        }
+                  this.getOptions();
+        },
+
+          ready(){
+                    var self = this;
+//                     this.$vm('sub').changeSkin('11');//调用子控件方法
+//                    globalEventModule.addEventListener("mainlist_text_day_night",function(options){
+//                            weexEventModule.ShowLogI(self.TAG,options.toString());
+//
+//                          self.$broadcast('changeSkin', {
+//                                                        "skintype": "11"
+//                                              })
+//                   });
+                },
     }
 </script>
 
 <style>
     .refresh-view{
-        height:100;
-        width:750;
+        height:100px;
+        width: 750px;;
         align-items:center;
     }
 
     .indicator{
-        width:60;
-        height:60;
+        width: 60px;;
+        height: 60px;
         color:#889967;
     }
+
+      .dayclass{
+           color:#666666;
+           font-size:40px;
+           font-weight:bold;
+         }
+      .nightclass{
+             color:#ff0000;
+             font-size:40px;
+             font-weight:bold;
+        }
 </style>

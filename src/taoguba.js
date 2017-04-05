@@ -1,7 +1,7 @@
 var BASE_URL = {
     IP:'192.168.1.15',
     HTTP:'http://',
-    PORT:'12580',
+    PORT:'8080',
 };
 
 var FIX = {

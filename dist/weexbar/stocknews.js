@@ -2549,7 +2549,7 @@
 	var BASE_URL = {
 	    IP: '192.168.1.15',
 	    HTTP: 'http://',
-	    PORT: '12580'
+	    PORT: '8080'
 	};
 
 	var FIX = {
@@ -2608,7 +2608,8 @@
 	        }
 
 	        //此处需注意一下,tabbar 用的直接是jsbundle 的路径,但是navigator是直接跳转到新页面上的.
-	        //http://localhost:8080/index.html?page=./dist/weexbar/stocknews.js
+	        //网页 http://localhost:8080/index.html?page=./dist/weexbar/stocknews.js
+	        //android 原生 http://192.168.1.15:12580/dist/mainlist.js
 	        if ((typeof window === 'undefined' ? 'undefined' : (0, _typeof3.default)(window)) === 'object') {
 	            nativeBase = isnav ? 'http://' + host + '/index.html?page=./dist/' : '/dist/';
 	        } else {

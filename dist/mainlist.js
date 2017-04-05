@@ -89,14 +89,13 @@
 	          "children": [
 	            {
 	              "type": "text",
-	              "classList": [
-	                "text"
-	              ],
+	              "attr": {
+	                "ref": "mainlist_text_day_night_ref",
+	                "value": function () {return this.row}
+	              },
+	              "classList": function () {return [this.textClass]},
 	              "events": {
 	                "click": "openitem"
-	              },
-	              "attr": {
-	                "value": function () {return this.row}
 	              }
 	            }
 	          ]
@@ -127,8 +126,13 @@
 	    "borderBottomStyle": "solid",
 	    "borderBottomColor": "#DDDDDD"
 	  },
-	  "text": {
+	  "dayclass": {
 	    "color": "#666666",
+	    "fontSize": 40,
+	    "fontWeight": "bold"
+	  },
+	  "nightclass": {
+	    "color": "#ff0000",
 	    "fontSize": 40,
 	    "fontWeight": "bold"
 	  }
@@ -147,18 +151,37 @@
 	var taoguba = __webpack_require__(4);
 	var modal = __weex_require__('@weex-module/modal');
 	var weexModule = __weex_require__('@weex-module/weexModule');
+	var weexEventModule = __weex_require__('@weex-module/weexEventModule');
+	var weexModalUIModule = __weex_require__('@weex-module/weexModalUIModule');
+	var globalEventModule = __weex_require__('@weex-module/globalEvent');
 	exports.default = {
 	    data: {
-	        rows: []
-
+	        rows: [],
+	        themetype: 0,
+	        textClass: 'dayclass',
+	        TAG: 'mainlist.we'
 	    },
 	    created: function created() {
+	        this.themetype = this.$getConfig().themetype;
 	        this.rows.push('weexbar/tabbar');
 	        this.rows.push('weexbar/stocknews');
 	        this.rows.push('weexbar/shuoshuo');
 	        this.rows.push('weexbar/dayanalysis');
 	        this.rows.push('weexbar/meetingbar');
 	        this.rows.push('weexbar/meetingtime');
+	        this.rows.push('weexbar/actionsheet');
+	        this.getOptions();
+	    },
+	    ready: function ready() {
+	        var self = this;
+	        globalEventModule.addEventListener("mainlist_text_day_night", function (options) {
+	            self.themetype = options.themetype;
+	            if (self.themetype == 0) {
+	                self.textClass = 'dayclass';
+	            } else {
+	                self.textClass = 'nightclass';
+	            }
+	        });
 	    },
 
 	    methods: {
@@ -169,6 +192,16 @@
 	                url: taoguba.getDefaultUrl(name),
 	                animated: "true"
 	            }, function (event) {});
+	        },
+
+	        getOptions: function getOptions() {},
+
+	        changeSkin: function changeSkin(themetype) {
+	            if (this.themetype == 0) {
+	                this.textClass = 'dayclass';
+	            } else {
+	                this.textClass = 'nightclass';
+	            }
 	        }
 	    }
 	};}
@@ -190,7 +223,7 @@
 	var BASE_URL = {
 	    IP: '192.168.1.15',
 	    HTTP: 'http://',
-	    PORT: '12580'
+	    PORT: '8080'
 	};
 
 	var FIX = {
@@ -199,7 +232,7 @@
 	};
 
 	var API = {
-	    apiGetForums: '/free/topic/apiGetForums?blockID=1&pageNo=1&flag=0'
+	    apiGetForums: '/free/topic/apiGetForums?'
 	};
 
 	exports.getDefaultUrl = function (name) {
@@ -249,7 +282,8 @@
 	        }
 
 	        //此处需注意一下,tabbar 用的直接是jsbundle 的路径,但是navigator是直接跳转到新页面上的.
-	        //http://localhost:8080/index.html?page=./dist/weexbar/stocknews.js
+	        //网页 http://localhost:8080/index.html?page=./dist/weexbar/stocknews.js
+	        //android 原生 http://192.168.1.15:12580/dist/mainlist.js
 	        if ((typeof window === 'undefined' ? 'undefined' : (0, _typeof3.default)(window)) === 'object') {
 	            nativeBase = isnav ? 'http://' + host + '/index.html?page=./dist/' : '/dist/';
 	        } else {

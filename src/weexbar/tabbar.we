@@ -17,7 +17,7 @@
                                    icon:"",
                                    image:"http://ww2.sinaimg.cn/large/0060lm7Tgw1fb5paqsppfj302v02gmwx.jpg",
                                    selectedImage:"http://ww3.sinaimg.cn/large/0060lm7Tgw1fb5pacghqhj302v02g744.jpg",
-                                   src:taoguba.getPathUrl('/dist/weexbar/stocknews.js'),
+                                   src:taoguba.getPathUrl('weexbar/stocknews.js'),
                                    visibility:"visible"
                                },
                                {
@@ -27,7 +27,7 @@
                                    icon:"",
                                    image:"http://ww2.sinaimg.cn/large/0060lm7Tgw1fb5oxe9vbkj302s02g0si.jpg",
                                    selectedImage:"http://ww4.sinaimg.cn/large/0060lm7Tgw1fb5ow9ddswj302s02gglh.jpg",
-                                   src:taoguba.getPathUrl('/dist/weexbar/shuoshuo.js'),
+                                   src:taoguba.getPathUrl('weexbar/shuoshuo.js'),
                                    visibility:"hidden"
                                },
                                {
@@ -37,7 +37,7 @@
                                    icon:"",
                                    image:"http://ww1.sinaimg.cn/large/0060lm7Tgw1fb5pbtauy1j302c02hmwx.jpg",
                                    selectedImage:"http://ww4.sinaimg.cn/large/0060lm7Tgw1fb5pbb390dj302c02hglg.jpg",
-                                   src:taoguba.getPathUrl('/dist/weexbar/dayanalysis.js'),
+                                   src:taoguba.getPathUrl('weexbar/dayanalysis.js'),
                                    visibility:"hidden"
                                },
                                 {
@@ -47,7 +47,7 @@
                                     icon:"",
                                     image:"http://ww1.sinaimg.cn/large/0060lm7Tgw1fb5pbtauy1j302c02hmwx.jpg",
                                     selectedImage:"http://ww4.sinaimg.cn/large/0060lm7Tgw1fb5pbb390dj302c02hglg.jpg",
-                                    src:taoguba.getPathUrl('/dist/weexbar/meetingbar.js'),
+                                    src:taoguba.getPathUrl('weexbar/meetingbar.js'),
                                     visibility:"hidden"
                                 }
 

@@ -2,7 +2,7 @@
   <div>
     <scroller class="scroller">
       <div class="row" repeat="{{row in rows}}" >
-          <text   class="{{textClass}}" onclick="openitem">{{row}}</text>
+          <text ref="mainlist_text_day_night_ref" class="{{textClass}}"  onclick="openitem">{{row}}</text>
       </div>
     </scroller>
 
@@ -14,43 +14,43 @@
     var taoguba = require('./taoguba');
     var modal =  require('@weex-module/modal')
     var weexModule =  require('@weex-module/weexModule');
+    var weexEventModule =  require('@weex-module/weexEventModule');
+    var weexModalUIModule =  require('@weex-module/weexModalUIModule');
     var globalEventModule = require('@weex-module/globalEvent');
     export default {
         data : {
           rows: [],
           themetype:0,
-          textClass:'dayclass'
-
+          textClass:'dayclass',
+          TAG:'mainlist.we'
         },
         created () {
+            this.themetype = this.$getConfig().themetype;
             this.rows.push('weexbar/tabbar')
             this.rows.push('weexbar/stocknews')
             this.rows.push('weexbar/shuoshuo')
             this.rows.push('weexbar/dayanalysis')
             this.rows.push('weexbar/meetingbar')
             this.rows.push('weexbar/meetingtime')
+            this.rows.push('weexbar/actionsheet')
+            this.getOptions()
         },
 
-
         ready(){
-        var self = this;
-    
-
-
-//            globalEventModule.addEventListener("mainlist_text_day_night",function(options){
-//                     console.log('mainlist_text_day_night =='+options.toString());
-//                     //callJS >>>> instanceId:1function:callJS tasks:[{"data":"1","type":2},{"data":"[{\"args\":[\"1\",{\"bundleUrl\":\"http://192.168.1.15:12580/dist/mainlist.js\",\"themetype\":1},true],\"method\":\"callback\"}]","type":3}]
-//                  self.themetype = options.themetype;
-//                  if(self.themetype==0){
-//                     self.textClass='dayclass'
-//                   }else{
-//                    self.textClass='nightclass'
-//                   }
-//                    console.log('mainlist_text_day_night themetype=='+self.themetype);
-//            });
-
-
-
+            var self = this;
+            globalEventModule.addEventListener("mainlist_text_day_night",function(options){
+                    //weexEventModule.ShowLogI(self.TAG,options.toString());
+                    //console.log('mainlist_text_day_night =='+options.toString());
+                    //callJS >>>> instanceId:1function:callJS tasks:[{"data":"1","type":2},{"data":"[{\"args\":[\"1\",{\"bundleUrl\":\"http://192.168.1.15:12580/dist/mainlist.js\",\"themetype\":1},true],\"method\":\"callback\"}]","type":3}]
+                  self.themetype = options.themetype;
+                  if(self.themetype==0){
+                     self.textClass='dayclass'
+                  }else{
+                     self.textClass='nightclass'
+                  }
+                  //weexEventModule.ShowLogI(self.TAG,'themetype=='+self.themetype);
+                  // console.log('mainlist_text_day_night themetype=='+self.themetype);
+           });
         },
         methods: {
             openitem:function (event) {
@@ -58,24 +58,49 @@
                 // tasks:[{"module":"modal","method":"toast","args":[{"message":{"position":{"height":52.77778,"width":713.19446,"x":33.333332,"y":191.66667},"type":"click",
                 // "target":{"ref":"186","type":"text","attr":{"value":"a"},"style":{"fontSize":45,"color":"#666666"},"event":["click"]},"timestamp":1488878471697}}]}]
                 var name = event.target.attr.value;
-                //alert('event.value : ' + event.value)
+                //weexModule.openUrl(taoguba.getDefaultUrl(name));
+
+//                var self = this;
+//                weexModalUIModule.alert("title","content",function(options) {
+//                    weexEventModule.ShowLogI(self.TAG,options.toString());
+//                    weexModalUIModule.toast(options.toString());
+//
+//                   var optionJson='{"TOPIC_ID_KEY":"1415605","TOPIC_REPLY_ID_KEY":"0"}';
+//                   weexEventModule.startOtherNativeActivity("com.taoguba.app.activity.TaogubaTopicActivity",optionJson);
+//
+//                });
+
+
+//                alert('event.value : ' + event.value)
                 navigator.push({
                     url: taoguba.getDefaultUrl(name),
                     animated: "true"
                 }, event => {
 
-                })
+               });
+//                weexModalUIModule.toast("-->"+name);
             },
-            // 获取 native的传参
-              getOptions: function() {
-                this.themetype = this.$getConfig().themetype;
-                if(this.themetype==0){
-                   this.textClass='dayclass'
-                }else{
-                   this.textClass='nightclass'
-                }
-                console.log('getOptions themetype=='+this.themetype);
-              }
+//             获取 native的传参
+             getOptions: function() {
+//                this.themetype = this.$getConfig().themetype;
+//                 weexEventModule.ShowLogI(this.TAG,this.themetype);
+//                if(this.themetype==0){
+//                   this.textClass='dayclass'
+//                }else{
+//                   this.textClass='nightclass'
+//                }
+//                var userID = weexEventModule.getUserID();
+//                 var loginFlag = weexEventModule.getLoginFlag();
+//                weexEventModule.ShowLogI(this.TAG,'themetype=='+this.themetype+'--userID-->'+userID+'--isLogin-->'+loginFlag);
+              },
+
+               changeSkin: function(themetype) {
+                   if(this.themetype==0){
+                           this.textClass='dayclass'
+                   }else{
+                           this.textClass='nightclass'
+                   }
+               }
         }
     }
 </script>
@@ -110,10 +135,4 @@
          font-size:40px;
          font-weight:bold;
     }
-
-  .text{
-    color:#666666;
-    font-size:40px;
-    font-weight:bold;
-  }
 </style>
